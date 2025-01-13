@@ -3,6 +3,7 @@ import cors from "cors";
 import { config } from "./config";
 import mongoose from "mongoose";
 import { registerRoutes } from "./routes";
+import errorHandler from "./middleware/error.middleware";
 
 const PORT = config.server.port;
 
@@ -26,6 +27,9 @@ app.use(cors());
     });
 
     registerRoutes(app);
+
+    // Error handler middleware should be the last middleware
+    app.use(errorHandler);
 
     app.listen(PORT, () => {
       console.log(`Server is listening on port:${PORT} `);

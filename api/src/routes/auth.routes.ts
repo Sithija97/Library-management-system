@@ -1,10 +1,19 @@
 import express from "express";
 import AuthController from "../controllers/auth.controller";
 import { validate } from "../middleware/validation.middleware";
-import { userSchema } from "../interfaces/User";
+import { Schemas } from "../schemas";
 
 const rounter = express.Router();
 
-rounter.post("/register", validate(userSchema), AuthController.handleRegister);
+rounter.post(
+  "/register",
+  validate(Schemas.user.create),
+  AuthController.handleRegister
+);
+rounter.post(
+  "/login",
+  validate(Schemas.user.login),
+  AuthController.handleLogin
+);
 
 export default rounter;

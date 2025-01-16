@@ -3,6 +3,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../../../../store";
 import { setDisplayLogin } from "../../../../store/slices/modal.slice";
 import { Modal } from "../../../../components";
 import { LoginForm } from "../login-form";
+import { RegisterForm } from "../register-form";
 
 export const AuthenticationModal = () => {
   const dispatch = useAppDispatch();
@@ -24,7 +25,13 @@ export const AuthenticationModal = () => {
 
   return (
     <Modal
-      content={login ? <LoginForm toggleRegister={toggleLogin} /> : <></>}
+      content={
+        login ? (
+          <LoginForm toggleRegister={toggleLogin} />
+        ) : (
+          <RegisterForm toggleLogin={toggleLogin} />
+        )
+      }
       toggleModal={toggleLogin}
     />
   );

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { LoginUserPayload, User } from "../../models/user";
+import { LoginUserPayload, RegisterUserPayload, User } from "../../models/user";
 import UserService from "../../services/authentication";
 import { LoadingStates } from "../../enums";
 
@@ -8,6 +8,9 @@ type AuthenticationState = {
   loginUserStatus: string;
   loginUserError: boolean;
   loginUserSuccess: boolean;
+  registerUserStatus: string;
+  registerUserError: boolean;
+  registerUserSuccess: boolean;
 };
 
 const initialState: AuthenticationState = {
@@ -15,6 +18,9 @@ const initialState: AuthenticationState = {
   loginUserStatus: LoadingStates.IDLE,
   loginUserError: false,
   loginUserSuccess: false,
+  registerUserStatus: LoadingStates.IDLE,
+  registerUserError: false,
+  registerUserSuccess: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -29,10 +35,26 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const registerUser = createAsyncThunk(
+  "auth/register",
+  async (user: RegisterUserPayload, thunkAPI) => {
+    try {
+      const response = UserService.register(user);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const AuthenticationSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    resetRegisterSuccess(state) {
+      state.registerUserSuccess = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
       // login
@@ -48,10 +70,24 @@ export const AuthenticationSlice = createSlice({
       .addCase(loginUser.rejected, (state) => {
         state.loginUserStatus = LoadingStates.FAILURE;
         state.loginUserError = true;
+      })
+
+      // register
+      .addCase(registerUser.pending, (state) => {
+        state.registerUserStatus = LoadingStates.LOADING;
+        state.registerUserError = false;
+      })
+      .addCase(registerUser.fulfilled, (state) => {
+        state.registerUserStatus = LoadingStates.SUCCESS;
+        state.registerUserSuccess = true;
+      })
+      .addCase(registerUser.rejected, (state) => {
+        state.registerUserStatus = LoadingStates.FAILURE;
+        state.registerUserError = true;
       });
   },
 });
 
-// export const {} = AuthenticationSlice.actions;
+export const { resetRegisterSuccess } = AuthenticationSlice.actions;
 
 export default AuthenticationSlice.reducer;

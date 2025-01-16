@@ -1,39 +1,63 @@
-.login-form {
+.register-form {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 32px;
+  padding: 16px;
 }
 
-.login-form-error {
-  margin-bottom: 16px;
-  color: #cb4c4e;
-}
-
-.login-form-input-group {
+.register-form-input-group {
   width: 100%;
   margin-bottom: 16px;
 }
 
-.login-form-input {
+.register-form-error {
+  margin-bottom: 16px;
+  color: #cb4c4e;
+}
+
+.register-form-name-input-group {
+  margin: 0;
+  width: 45%;
+  margin-bottom: 16px;
+}
+
+.register-form-name-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.register-form-input {
   width: 100%;
   height: 2.5rem;
   font-size: 1.25rem;
   padding: 5px;
 }
 
-.login-form-input ::placeholder {
+.register-form-input-name {
+  width: 100%;
+  height: 2.5rem;
+  font-size: 1.25rem;
+  padding: 5px;
+}
+
+.register-form-input ::placeholder {
   color: var(--text-secondary);
 }
 
-.login-form-input :focus {
+.register-form-input :focus {
   outline: none;
 }
 
-.login-form-submit {
+.register-form-input-name ::placeholder {
+  color: var(--text-secondary);
+}
+
+.register-form-submit {
   width: 100%;
   height: 2.5rem;
   border: none;
@@ -52,12 +76,12 @@
   /* box-shadow: var(--box-shadow); */
 }
 
-.login-form-register {
+.register-form-login {
   color: var(--primary);
   cursor: pointer;
   margin-left: 4px;
 }
 
-.login-form-register :hover {
+.register-form-login :hover {
   text-decoration: underline;
 }

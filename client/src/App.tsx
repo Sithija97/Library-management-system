@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { HomePage } from "./page/home-page/home-page";
 import { RootState, useAppSelector } from "./store";
 import "./App.css";

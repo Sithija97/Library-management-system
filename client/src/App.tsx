@@ -1,6 +1,8 @@
 import { useEffect } from "react";
-import { HomePage } from "./page/home-page/home-page";
 import { RootState, useAppSelector } from "./store";
+import { RouterProvider } from "react-router-dom";
+import { router } from "./router";
+import "remixicon/fonts/remixicon.css";
 import "./App.css";
 
 function App() {
@@ -14,7 +16,8 @@ function App() {
 
   return (
     <>
-      <HomePage />
+      {" "}
+      <RouterProvider router={router} />
     </>
   );
 }

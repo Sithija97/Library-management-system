@@ -7,7 +7,7 @@ type ModalState = {
 };
 
 const initialState: ModalState = {
-  displayLogin: true,
+  displayLogin: false,
   displayLibraryCard: false,
   displayLoan: false,
 };

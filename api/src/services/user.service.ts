@@ -42,3 +42,46 @@ export async function login(credentials: {
     throw new Error("Unexpected error during registration.");
   }
 }
+
+export async function findAllUsers(): Promise<IUserModel[]> {
+  try {
+    const users = await User.find();
+    return users;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function findUserById(userId: string): Promise<IUserModel> {
+  try {
+    const user = await User.findById(userId);
+    if (user) return user;
+
+    throw new CustomError("User does not exist with this ID", 404);
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function modifyeUser(user: IUserModel): Promise<IUserModel> {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(user._id, user, {
+      new: true,
+    });
+    if (!updatedUser) {
+      throw new CustomError("Unable to update user", 404);
+    }
+    return updatedUser;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}
+
+export async function removeUser(userId: string): Promise<string> {
+  try {
+    await User.findByIdAndDelete(userId);
+    return "User deleted successfully";
+  } catch (error) {
+    throw new Error("Unable to delete user.");
+  }
+}

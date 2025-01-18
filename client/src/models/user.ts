@@ -1,3 +1,4 @@
+import { UserTypes } from "./../enums/index";
 import { UserRoles } from "../enums";
 
 export type User = {
@@ -19,4 +20,9 @@ export type RegisterUserPayload = {
   lastName: string;
   email: string;
   password: string;
+};
+
+export type FetchUserPayload = {
+  userId: string;
+  property: UserTypes;
 };

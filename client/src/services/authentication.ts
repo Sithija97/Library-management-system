@@ -1,5 +1,9 @@
 import axios from "axios";
-import { LoginUserPayload, RegisterUserPayload } from "../models/user";
+import {
+  FetchUserPayload,
+  LoginUserPayload,
+  RegisterUserPayload,
+} from "../models/user";
 
 const login = async (user: LoginUserPayload) => {
   const response = await axios.post("http://localhost:8000/auth/login", user);
@@ -14,5 +18,12 @@ const register = async (user: RegisterUserPayload) => {
   return response.data.user;
 };
 
-const UserService = { login, register };
+const fetch = async (payload: FetchUserPayload) => {
+  const response = await axios.get(
+    `http://localhost:8000/users/${payload.userId}`
+  );
+  return response.data.user;
+};
+
+const UserService = { login, register, fetch };
 export default UserService;

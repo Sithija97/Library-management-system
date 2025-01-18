@@ -10,3 +10,8 @@ export enum UserRoles {
   EMPLOYEE = "EMPLOYEE",
   PATRON = "PATRON",
 }
+
+export enum UserTypes {
+  LOGGED_IN_USER = "loggedInUser",
+  PROFILE_USER = "profileUser",
+}

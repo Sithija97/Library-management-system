@@ -17,8 +17,6 @@ export async function register(user: IUser): Promise<IUserModel> {
 
     return await newUser.save();
   } catch (error) {
-    if (error instanceof CustomError) throw error;
-    console.error("Unable to register user at this time:", error);
     throw new Error("Unable to register user at this time.");
   }
 }
@@ -32,13 +30,11 @@ export async function login(credentials: {
     const user = await User.findOne({ email });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new CustomError("Invalid username or password", 401);
+      throw new CustomError("Invalid email or password", 401);
     }
 
     return user;
   } catch (error) {
-    if (error instanceof CustomError) throw error;
-    console.error("Unexpected error during registration:", error);
     throw new Error("Unexpected error during registration.");
   }
 }
@@ -63,7 +59,7 @@ export async function findUserById(userId: string): Promise<IUserModel> {
   }
 }
 
-export async function modifyeUser(user: IUserModel): Promise<IUserModel> {
+export async function modifyUser(user: IUserModel): Promise<IUserModel> {
   try {
     const updatedUser = await User.findByIdAndUpdate(user._id, user, {
       new: true,
@@ -79,7 +75,9 @@ export async function modifyeUser(user: IUserModel): Promise<IUserModel> {
 
 export async function removeUser(userId: string): Promise<string> {
   try {
-    await User.findByIdAndDelete(userId);
+    const id = await User.findByIdAndDelete(userId);
+    if (!id) throw new CustomError("User does not exist", 404);
+
     return "User deleted successfully";
   } catch (error) {
     throw new Error("Unable to delete user.");

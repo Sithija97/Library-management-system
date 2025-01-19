@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import {
   findAllUsers,
   findUserById,
-  modifyeUser,
+  modifyUser,
   removeUser,
 } from "../services/user.service";
 
@@ -22,7 +22,7 @@ const getUserById = asyncHandler(async (req: Request, res: Response) => {
 
 const updateUser = asyncHandler(async (req: Request, res: Response) => {
   const user = req.body;
-  const updatedUser = await modifyeUser(user);
+  const updatedUser = await modifyUser(user);
 
   res.status(202).json({ message: "User updated successfully.", updatedUser });
 });

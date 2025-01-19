@@ -21,6 +21,9 @@ type AuthenticationState = {
   fetchUserStatus: string;
   fetchUserError: boolean;
   fetchUserSuccess: boolean;
+  updateUserStatus: string;
+  updateUserError: boolean;
+  updateUserSuccess: boolean;
 };
 
 const initialState: AuthenticationState = {
@@ -35,6 +38,9 @@ const initialState: AuthenticationState = {
   fetchUserStatus: LoadingStates.IDLE,
   fetchUserError: false,
   fetchUserSuccess: false,
+  updateUserStatus: LoadingStates.IDLE,
+  updateUserError: false,
+  updateUserSuccess: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -70,6 +76,18 @@ export const fetchUser = createAsyncThunk(
         user,
         property: payload.property,
       };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  "auth/update",
+  async (payload: User, thunkAPI) => {
+    try {
+      const response = await UserService.update(payload);
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -131,6 +149,22 @@ export const AuthenticationSlice = createSlice({
       .addCase(fetchUser.rejected, (state) => {
         state.fetchUserStatus = LoadingStates.FAILURE;
         state.fetchUserError = true;
+      })
+
+      // update
+      .addCase(updateUser.pending, (state) => {
+        state.updateUserStatus = LoadingStates.LOADING;
+        state.updateUserError = false;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.updateUserSuccess = true;
+        state.loggedInUser = action.payload;
+        state.profileUser = action.payload;
+        state.updateUserStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.updateUserStatus = LoadingStates.FAILURE;
+        state.updateUserError = true;
       });
   },
 });

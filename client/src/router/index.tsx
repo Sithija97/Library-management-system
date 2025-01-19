@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { HomePage, LayoutPage } from "../pages";
+import { HomePage, LayoutPage, ProfilePage } from "../pages";
 
 export const ROOT = "/";
 export const CATELOG = "/catalog";
@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
       },
       {
         path: PROFILE,
-        element: <p>profile</p>,
+        element: <ProfilePage />,
       },
     ],
   },

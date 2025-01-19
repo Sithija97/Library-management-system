@@ -3,16 +3,20 @@ import {
   FetchUserPayload,
   LoginUserPayload,
   RegisterUserPayload,
+  User,
 } from "../models/user";
 
 const login = async (user: LoginUserPayload) => {
-  const response = await axios.post("http://localhost:8000/auth/login", user);
+  const response = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/auth/login`,
+    user
+  );
   return response.data.user;
 };
 
 const register = async (user: RegisterUserPayload) => {
   const response = await axios.post(
-    "http://localhost:8000/auth/register",
+    `${import.meta.env.VITE_BASE_URL}/auth/register`,
     user
   );
   return response.data.user;
@@ -20,10 +24,18 @@ const register = async (user: RegisterUserPayload) => {
 
 const fetch = async (payload: FetchUserPayload) => {
   const response = await axios.get(
-    `http://localhost:8000/users/${payload.userId}`
+    `${import.meta.env.VITE_BASE_URL}/users/${payload.userId}`
   );
   return response.data.user;
 };
 
-const UserService = { login, register, fetch };
+const update = async (payload: User) => {
+  const response = await axios.put(
+    `${import.meta.env.VITE_BASE_URL}/users`,
+    payload
+  );
+  return response.data.user;
+};
+
+const UserService = { login, register, fetch, update };
 export default UserService;

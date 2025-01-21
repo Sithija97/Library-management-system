@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { HomePage, LayoutPage, ProfilePage } from "../pages";
+import { CatalogPage, HomePage, LayoutPage, ProfilePage } from "../pages";
 
 export const ROOT = "/";
 export const CATELOG = "/catalog";
@@ -17,11 +17,11 @@ export const router = createBrowserRouter([
       },
       {
         path: CATELOG,
-        element: <p>catelog</p>,
+        element: <CatalogPage />,
       },
       {
         path: RESOURCE,
-        element: <p>resource</p>,
+        element: <CatalogPage />,
       },
       {
         path: PROFILE,

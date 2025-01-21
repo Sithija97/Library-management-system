@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import AuthenticationReducer from "./slices/auth.slice";
 import ModalReducer from "./slices/modal.slice";
+import BookReducer from "./slices/book.slice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import storage from "redux-persist/lib/storage";
 import {
@@ -49,6 +50,7 @@ const persistedAuthenticationReducer = persistReducer(
 
 const rootReducer = combineReducers({
   authentication: persistedAuthenticationReducer,
+  books: BookReducer,
   modal: ModalReducer,
 });
 

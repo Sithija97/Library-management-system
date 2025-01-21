@@ -4,5 +4,6 @@
   border-radius: 12px;
   padding: 16px;
   border: 1px solid rgba(0, 0, 0, 0.096);
-  background-color: var(--background-primary);
+  /* background-color: var(--background-secondary); */
+  background-color: whitesmoke;
 }

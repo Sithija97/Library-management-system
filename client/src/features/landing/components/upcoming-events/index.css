@@ -1,12 +1,13 @@
 .upcoming-events {
-  width: 98%;
+  width: 94%;
   height: fit-content;
   border-radius: 12px;
   padding: 16px;
   /* box-shadow: var(--box-shadow); */
   border: 1px solid rgba(0, 0, 0, 0.096);
   margin-top: 16px;
-  background-color: var(--background-secondary);
+  /* background-color: var(--background-secondary); */
+  background-color: whitesmoke;
 }
 
 .upcoming-events-header-group {

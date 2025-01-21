@@ -1,5 +1,5 @@
 .get-library-card {
-  width: 98%;
+  width: 94%;
   height: fit-content;
   border-radius: 12px;
   padding: 16px;
@@ -10,7 +10,8 @@
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(0, 0, 0, 0.096);
-  background-color: var(--background-secondary);
+  /* background-color: var(--background-secondary); */
+  background-color: whitesmoke;
 }
 
 .get-library-card-img {

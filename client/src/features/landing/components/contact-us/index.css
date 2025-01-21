@@ -4,9 +4,10 @@
   margin-top: 16px;
   border-radius: 12px;
   height: fit-content;
-  background-color: var(--background-secondary);
+  /* background-color: var(--background-secondary); */
   /* box-shadow: var(--box-shadow); */
   border: 1px solid rgba(0, 0, 0, 0.096);
+  background-color: whitesmoke;
 }
 
 .contact-us-divider {

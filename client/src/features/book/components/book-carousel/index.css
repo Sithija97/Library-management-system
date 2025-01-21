@@ -1,0 +1,54 @@
+.book-carousel {
+  width: 100%;
+  height: 425px;
+  /* box-shadow: var(); */
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  overflow: hidden;
+  flex-wrap: wrap;
+  row-gap: 16px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.096);
+  background-color: var(--background-secondary);
+}
+
+.book-carousel-left-button {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-size: 1.5rem;
+}
+
+.book-carousel-right-button {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-size: 1.5rem;
+}
+
+.book-carousel-left-button:hover {
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: rgba(122, 121, 120, 0.3);
+}
+
+.book-carousel-right-button:hover {
+  border-radius: 100%;
+  cursor: pointer;
+  background-color: rgba(122, 121, 120, 0.3);
+}

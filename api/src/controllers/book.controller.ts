@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import {
   findAllBooks,
   modifyBook,
+  queryBook,
   registerBook,
   removeBook,
 } from "../services/book.service";
@@ -34,4 +35,40 @@ const deleteBook = asyncHandler(async (req: Request, res: Response) => {
   res.status(202).json({ message: "Book deleted successfully." });
 });
 
-export default { createBook, getAllBooks, updateBook, deleteBook };
+const searchForBooksByQuery = asyncHandler(
+  async (req: Request, res: Response) => {
+    let {
+      title,
+      barcode,
+      author,
+      description,
+      subject,
+      genre,
+      page = 1,
+      limit = 25,
+    } = req.query;
+
+    let books = await queryBook(
+      Number(page),
+      Number(limit),
+      title as string,
+      barcode as string,
+      description as string,
+      author as string,
+      subject as string,
+      genre as string
+    );
+
+    res
+      .status(202)
+      .json({ message: "Retrieved books from query.", page: books });
+  }
+);
+
+export default {
+  createBook,
+  getAllBooks,
+  updateBook,
+  deleteBook,
+  searchForBooksByQuery,
+};

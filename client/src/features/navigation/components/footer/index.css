@@ -5,7 +5,8 @@
   align-items: center;
   justify-content: space-evenly;
   color: var(--text-secondary);
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
+  background-color: black;
 }
 
 .footer-text {

@@ -6,6 +6,7 @@ import { LoadingStates } from "../../../../enums";
 import { BookCard } from "../../../book";
 import { CatalogAdvancedSearch } from "../advance-search";
 import "./index.css";
+import { CatalogSearchPageNavigator } from "../search-page-navigator";
 
 export const CatalogSearch = () => {
   const location = useLocation();
@@ -27,15 +28,17 @@ export const CatalogSearch = () => {
       ) : (
         <>
           <h2>
-            {`Displaying ${bookState.paginInformation?.pageCount} books out of
-          ${bookState.paginInformation?.totalCount}`}
+            {`Displaying ${bookState.pagingInformation?.pageCount} books out of
+          ${bookState.pagingInformation?.totalCount}`}
           </h2>
           <div className="catalog-search-item-area">
             {bookState.books.map((book) => (
               <BookCard key={book.barcode} book={book} />
             ))}
           </div>
-          <div className="catalog-search-pages"></div>
+          <div className="catalog-search-pages">
+            <CatalogSearchPageNavigator />
+          </div>
         </>
       )}
     </div>

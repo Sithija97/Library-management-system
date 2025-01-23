@@ -5,7 +5,7 @@ import { LoadingStates } from "../../enums";
 
 type BooksState = {
   books: Book[];
-  paginInformation: PageInfo | null;
+  pagingInformation: PageInfo | null;
   fetchAllBooksStatus: string;
   fetchAllBooksError: boolean;
   fetchAllBooksSuccess: boolean;
@@ -16,7 +16,7 @@ type BooksState = {
 
 const initialState: BooksState = {
   books: [],
-  paginInformation: null,
+  pagingInformation: null,
   fetchAllBooksStatus: LoadingStates.IDLE,
   fetchAllBooksError: false,
   fetchAllBooksSuccess: false,
@@ -78,7 +78,7 @@ export const BookSlice = createSlice({
       .addCase(queryBooks.fulfilled, (state, action) => {
         state.queryBooksSuccess = true;
         state.books = action.payload.items;
-        state.paginInformation = {
+        state.pagingInformation = {
           totalCount: action.payload.totalCount,
           currentPage: action.payload.currentPage,
           totalPages: action.payload.totalPages,

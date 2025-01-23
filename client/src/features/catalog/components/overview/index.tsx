@@ -3,8 +3,8 @@ import { RootState, useAppDispatch, useAppSelector } from "../../../../store";
 import { fetchAllBooks } from "../../../../store/slices/book.slice";
 import { LoadingStates } from "../../../../enums";
 import { generateRandomGenres, getBookListByGenre } from "../../utils";
-import "./index.css";
 import { CatalogOverviewSection } from "../overview-section";
+import "./index.css";
 
 export const CatalogOverview = () => {
   const dispatch = useAppDispatch();

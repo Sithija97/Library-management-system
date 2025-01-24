@@ -37,5 +37,12 @@ const update = async (payload: User) => {
   return response.data.user;
 };
 
-const UserService = { login, register, fetch, update };
+const getCard = async (user: string) => {
+  const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/card`, {
+    user,
+  });
+  return response.data.libraryCard;
+};
+
+const UserService = { login, register, fetch, update, getCard };
 export default UserService;

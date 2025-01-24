@@ -12,6 +12,7 @@ type AuthenticationState = {
   [key: string]: any;
   loggedInUser: User | undefined;
   profileUser: User | undefined;
+  libraryCard: string;
   loginUserStatus: string;
   loginUserError: boolean;
   loginUserSuccess: boolean;
@@ -29,6 +30,7 @@ type AuthenticationState = {
 const initialState: AuthenticationState = {
   loggedInUser: undefined,
   profileUser: undefined,
+  libraryCard: "",
   loginUserStatus: LoadingStates.IDLE,
   loginUserError: false,
   loginUserSuccess: false,
@@ -41,6 +43,9 @@ const initialState: AuthenticationState = {
   updateUserStatus: LoadingStates.IDLE,
   updateUserError: false,
   updateUserSuccess: false,
+  getLibraryCardStatus: LoadingStates.IDLE,
+  getLibraryCardError: false,
+  getLibraryCardSuccess: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -87,6 +92,18 @@ export const updateUser = createAsyncThunk(
   async (payload: User, thunkAPI) => {
     try {
       const response = await UserService.update(payload);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getLibraryCard = createAsyncThunk(
+  "card/getLibraryCard",
+  async (userId: string, thunkAPI) => {
+    try {
+      const response = await UserService.getCard(userId);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -165,6 +182,21 @@ export const AuthenticationSlice = createSlice({
       .addCase(updateUser.rejected, (state) => {
         state.updateUserStatus = LoadingStates.FAILURE;
         state.updateUserError = true;
+      })
+
+      // get library card
+      .addCase(getLibraryCard.pending, (state) => {
+        state.getLibraryCardStatus = LoadingStates.LOADING;
+        state.getLibraryCardError = false;
+      })
+      .addCase(getLibraryCard.fulfilled, (state, action) => {
+        state.getLibraryCardSuccess = true;
+        state.libraryCard = action.payload._id;
+        state.getLibraryCardStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(getLibraryCard.rejected, (state) => {
+        state.getLibraryCardStatus = LoadingStates.FAILURE;
+        state.getLibraryCardError = true;
       });
   },
 });

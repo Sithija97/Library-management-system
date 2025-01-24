@@ -2,6 +2,7 @@ import { Express, Request, Response } from "express";
 import authRoutes from "./auth.routes";
 import userRoutes from "./user.routes";
 import bookRoutes from "./book.routes";
+import loanRutes from "./loan-record.routes";
 import cardRoutes from "./library-card.routes";
 
 export function registerRoutes(app: Express) {
@@ -9,4 +10,5 @@ export function registerRoutes(app: Express) {
   app.use("/users", userRoutes);
   app.use("/book", bookRoutes);
   app.use("/card", cardRoutes);
+  app.use("/loan", loanRutes);
 }

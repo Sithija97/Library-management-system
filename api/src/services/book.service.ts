@@ -1,17 +1,34 @@
+import mongoose from "mongoose";
 import { IBook } from "../interfaces/Book";
 import Book, { IBookModel } from "../models/Book";
 import { IPagination } from "../models/Pagination";
 import CustomError from "../utils/error.util";
 
 export async function registerBook(book: IBook): Promise<IBookModel> {
-  const bookExists = await Book.findOne({ barcode: book.barcode });
-  if (bookExists) {
-    throw new CustomError("Book already exists with this barcode", 409);
-  }
   try {
+    const bookExists = await Book.findOne({ barcode: book.barcode });
+    if (bookExists) {
+      throw new CustomError("Book already exists with this barcode", 409);
+    }
     const newBook = new Book(book);
     return await newBook.save();
   } catch (error: any) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
+    throw new Error(error.message);
+  }
+}
+
+export async function findBookById(id: string): Promise<IBookModel> {
+  try {
+    const book = await Book.findById(id);
+    if (!book) throw new CustomError("The specified book does not exist.", 404);
+    return book;
+  } catch (error: any) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error(error.message);
   }
 }
@@ -27,7 +44,7 @@ export async function findAllBooks(): Promise<IBookModel[]> {
 
 export async function modifyBook(book: IBookModel): Promise<IBookModel> {
   try {
-    const updatedBook = await Book.findByIdAndUpdate(
+    const updatedBook = await Book.findOneAndUpdate(
       { barcode: book.barcode },
       book,
       { new: true }

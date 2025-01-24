@@ -1,3 +1,4 @@
+import { LoanRecordSchema } from "./LoanRecord";
 import mongoose, { Document, Schema } from "mongoose";
 import { IBook } from "../interfaces/Book";
 
@@ -14,6 +15,7 @@ const BookSchema = new Schema<IBookModel>({
   publisher: { type: String, required: true },
   pages: { type: Number, required: true },
   genre: { type: String, required: true },
+  records: [LoanRecordSchema],
 });
 
 export default mongoose.model<IBookModel>("Book", BookSchema);

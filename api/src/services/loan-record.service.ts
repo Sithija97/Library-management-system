@@ -64,4 +64,16 @@ export async function modifyRecord(
   }
 }
 
-export async function queryRecords() {}
+export async function queryRecords(params: {
+  property: string;
+  value: string | Date;
+}): Promise<ILoanRecordModel[]> {
+  try {
+    const records = await LoanRecord.find({ [params.property]: params.value })
+      .populate("item")
+      .sort("loanedDate");
+    return records;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

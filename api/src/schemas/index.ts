@@ -5,7 +5,8 @@ import {
   userIdSchema,
 } from "./user";
 import { createBookSchema, updateBookSchema, deleteBookSchema } from "./book";
-import { createSchema as createCardSchema, getSchema } from "./library-card";
+import { createCardSchema, getSchema } from "./library-card";
+import { createLoanSchema, queryLoanSchema, updateLoanSchema } from "./loan";
 
 export const Schemas = {
   user: {
@@ -22,5 +23,10 @@ export const Schemas = {
   libraryCard: {
     create: createCardSchema,
     get: getSchema,
+  },
+  loan: {
+    create: createLoanSchema,
+    update: updateLoanSchema,
+    query: queryLoanSchema,
   },
 };

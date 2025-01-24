@@ -36,6 +36,9 @@ export async function modifyBook(book: IBookModel): Promise<IBookModel> {
 
     return updatedBook;
   } catch (error: any) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error(error.message);
   }
 }
@@ -47,6 +50,9 @@ export async function removeBook(barcode: string): Promise<string> {
 
     return "Book deleted successfully";
   } catch (error) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error("Unable to delete book.");
   }
 }

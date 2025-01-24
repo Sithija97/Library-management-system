@@ -5,8 +5,8 @@ import { queryBooks } from "../../../../store/slices/book.slice";
 import { LoadingStates } from "../../../../enums";
 import { BookCard } from "../../../book";
 import { CatalogAdvancedSearch } from "../advance-search";
-import "./index.css";
 import { CatalogSearchPageNavigator } from "../search-page-navigator";
+import "./index.css";
 
 export const CatalogSearch = () => {
   const location = useLocation();

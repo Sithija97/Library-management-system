@@ -35,6 +35,9 @@ export async function login(credentials: {
 
     return user;
   } catch (error) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error("Unexpected error during registration.");
   }
 }
@@ -55,6 +58,9 @@ export async function findUserById(userId: string): Promise<IUserModel> {
 
     throw new CustomError("User does not exist with this ID", 404);
   } catch (error: any) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error(error.message);
   }
 }
@@ -69,6 +75,9 @@ export async function modifyUser(user: IUserModel): Promise<IUserModel> {
     }
     return updatedUser;
   } catch (error: any) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error(error.message);
   }
 }
@@ -80,6 +89,9 @@ export async function removeUser(userId: string): Promise<string> {
 
     return "User deleted successfully";
   } catch (error) {
+    if (error instanceof CustomError) {
+      throw error;
+    }
     throw new Error("Unable to delete user.");
   }
 }

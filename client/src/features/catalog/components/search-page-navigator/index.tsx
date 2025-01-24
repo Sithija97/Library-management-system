@@ -54,12 +54,12 @@ export const CatalogSearchPageNavigator = () => {
   return (
     <div className="catalog-search-page-navigator">
       <p
-        className="catalog-search-page-navigator-navigte"
+        className="catalog-search-page-navigator-navigate"
         onClick={navigateToPrevious}
       >
         Prev
       </p>
-      <div className="catalog-search-page-number">
+      <div className="catalog-search-page-numbers">
         {pagingInformation &&
           calculatePaging(pagingInformation).map((num) => {
             if (num === `${pagingInformation.currentPage}`)
@@ -85,7 +85,7 @@ export const CatalogSearchPageNavigator = () => {
           })}
       </div>
       <p
-        className="catalog-search-page-navigator-navigte"
+        className="catalog-search-page-navigator-navigate"
         onClick={navigateToNext}
       >
         Next

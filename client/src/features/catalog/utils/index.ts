@@ -75,11 +75,11 @@ export function calculatePaging(pageInfo: PageInfo): string[] {
     } else {
       for (let i = 1; i <= 2; i++) {
         pArr.push(`${i}`);
-        pArr.push("...");
+      }
+      pArr.push("...");
 
-        for (let i = total - 5; i <= total; i++) {
-          pArr.push(`${i}`);
-        }
+      for (let i = total - 5; i <= total; i++) {
+        pArr.push(`${i}`);
       }
     }
   }

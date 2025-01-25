@@ -26,6 +26,9 @@ type BooksState = {
   checkinBookStatus: string;
   checkinBookSuccess: boolean;
   checkinBookError: boolean;
+  loadBookByBarcodeStatus: string;
+  loadBookByBarcodeSuccess: boolean;
+  loadBookByBarcodeError: boolean;
 };
 
 const initialState: BooksState = {
@@ -44,6 +47,9 @@ const initialState: BooksState = {
   checkinBookStatus: LoadingStates.IDLE,
   checkinBookSuccess: false,
   checkinBookError: false,
+  loadBookByBarcodeStatus: LoadingStates.IDLE,
+  loadBookByBarcodeSuccess: false,
+  loadBookByBarcodeError: false,
 };
 
 export const fetchAllBooks = createAsyncThunk(
@@ -117,6 +123,18 @@ export const checkinBook = createAsyncThunk(
 
       const loan = await loanService.updateLoan(updatedRecord);
       return loan;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const loadBookByBarcode = createAsyncThunk(
+  "books/id",
+  async (payload: string, thunkAPI) => {
+    try {
+      const response = BookService.fetchByBarcode(payload);
+      return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -218,6 +236,22 @@ export const BookSlice = createSlice({
       .addCase(checkinBook.rejected, (state) => {
         state.checkinBookStatus = LoadingStates.FAILURE;
         state.checkinBookError = true;
+      })
+
+      // load book by barcode
+      .addCase(loadBookByBarcode.pending, (state) => {
+        state.loadBookByBarcodeStatus = LoadingStates.LOADING;
+        state.loadBookByBarcodeError = false;
+      })
+      .addCase(loadBookByBarcode.fulfilled, (state, action) => {
+        state.loadBookByBarcodeSuccess = true;
+        state.currentBook = action.payload;
+        state.loadBookByBarcodeStatus = LoadingStates.SUCCESS;
+        console.log("success");
+      })
+      .addCase(loadBookByBarcode.rejected, (state) => {
+        state.loadBookByBarcodeStatus = LoadingStates.FAILURE;
+        state.loadBookByBarcodeError = true;
       });
   },
 });

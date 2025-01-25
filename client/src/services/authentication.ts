@@ -5,6 +5,7 @@ import {
   RegisterUserPayload,
   User,
 } from "../models/user";
+import { UserRoles } from "../enums";
 
 const login = async (user: LoginUserPayload) => {
   const response = await axios.post(
@@ -44,5 +45,23 @@ const getCard = async (user: string) => {
   return response.data.libraryCard;
 };
 
-const UserService = { login, register, fetch, update, getCard };
+const fetchUserRecords = async (userId: string) => {
+  const response = await axios.post(
+    `${import.meta.env.VITE_BASE_URL}/loan/query`,
+    {
+      property: UserRoles.PATRON.toLowerCase(),
+      value: userId,
+    }
+  );
+  return response.data.records;
+};
+
+const UserService = {
+  login,
+  register,
+  fetch,
+  update,
+  getCard,
+  fetchUserRecords,
+};
 export default UserService;

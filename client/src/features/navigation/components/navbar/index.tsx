@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../../../store";
 import { Link, useNavigate } from "react-router-dom";
 import { setDisplayLogin } from "../../../../store/slices/modal.slice";
-import { CATELOG, ROOT } from "../../../../router";
+import { CATALOG, ROOT } from "../../../../router";
 import "./index.css";
 
 export const Navbar = () => {
@@ -54,7 +54,7 @@ export const Navbar = () => {
         <h3>My Library</h3>
       </Link>
       <div className="navbar-option-section">
-        <Link to={CATELOG} className="navbar-option navbar-link">
+        <Link to={CATALOG} className="navbar-option navbar-link">
           <h4>View Catalog</h4>
         </Link>
         <div className="navbar-search-box">

@@ -7,12 +7,14 @@ import {
 } from "../../models/user";
 import UserService from "../../services/authentication";
 import { LoadingStates } from "../../enums";
+import { LoanRecord } from "../../models/loan-record";
 
 type AuthenticationState = {
   [key: string]: any;
   loggedInUser: User | undefined;
   profileUser: User | undefined;
   libraryCard: string;
+  profileUserRecords: LoanRecord[];
   loginUserStatus: string;
   loginUserError: boolean;
   loginUserSuccess: boolean;
@@ -25,12 +27,19 @@ type AuthenticationState = {
   updateUserStatus: string;
   updateUserError: boolean;
   updateUserSuccess: boolean;
+  getLibraryCardStatus: string;
+  getLibraryCardError: boolean;
+  getLibraryCardSuccess: boolean;
+  getProfileUserRecordsStatus: string;
+  getProfileUserRecordsError: boolean;
+  getProfileUserRecordsSuccess: boolean;
 };
 
 const initialState: AuthenticationState = {
   loggedInUser: undefined,
   profileUser: undefined,
   libraryCard: "",
+  profileUserRecords: [],
   loginUserStatus: LoadingStates.IDLE,
   loginUserError: false,
   loginUserSuccess: false,
@@ -46,6 +55,9 @@ const initialState: AuthenticationState = {
   getLibraryCardStatus: LoadingStates.IDLE,
   getLibraryCardError: false,
   getLibraryCardSuccess: false,
+  getProfileUserRecordsStatus: LoadingStates.IDLE,
+  getProfileUserRecordsError: false,
+  getProfileUserRecordsSuccess: false,
 };
 
 export const loginUser = createAsyncThunk(
@@ -100,10 +112,22 @@ export const updateUser = createAsyncThunk(
 );
 
 export const getLibraryCard = createAsyncThunk(
-  "card/getLibraryCard",
+  "auth/getLibraryCard",
   async (userId: string, thunkAPI) => {
     try {
       const response = await UserService.getCard(userId);
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const getProfileUserRecords = createAsyncThunk(
+  "auth/getProfileUserRecords",
+  async (userId: string, thunkAPI) => {
+    try {
+      const response = await UserService.fetchUserRecords(userId);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -123,6 +147,9 @@ export const AuthenticationSlice = createSlice({
     },
     resetAuthState(state) {
       Object.assign(state, initialState);
+    },
+    resetProfileUserRecords(state) {
+      state.profileUserRecords = [];
     },
   },
   extraReducers: (builder) => {
@@ -200,11 +227,30 @@ export const AuthenticationSlice = createSlice({
       .addCase(getLibraryCard.rejected, (state) => {
         state.getLibraryCardStatus = LoadingStates.FAILURE;
         state.getLibraryCardError = true;
+      })
+
+      // get user loan records
+      .addCase(getProfileUserRecords.pending, (state) => {
+        state.getProfileUserRecordsStatus = LoadingStates.LOADING;
+        state.getProfileUserRecordsError = false;
+      })
+      .addCase(getProfileUserRecords.fulfilled, (state, action) => {
+        state.getProfileUserRecordsSuccess = true;
+        state.profileUserRecords = action.payload;
+        state.getProfileUserRecordsStatus = LoadingStates.SUCCESS;
+      })
+      .addCase(getProfileUserRecords.rejected, (state) => {
+        state.getProfileUserRecordsStatus = LoadingStates.FAILURE;
+        state.getProfileUserRecordsError = true;
       });
   },
 });
 
-export const { resetUser, resetAuthState, resetRegisterSuccess } =
-  AuthenticationSlice.actions;
+export const {
+  resetUser,
+  resetAuthState,
+  resetRegisterSuccess,
+  resetProfileUserRecords,
+} = AuthenticationSlice.actions;
 
 export default AuthenticationSlice.reducer;

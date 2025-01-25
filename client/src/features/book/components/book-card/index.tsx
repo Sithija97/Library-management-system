@@ -60,9 +60,6 @@ export const BookCard = ({ book }: IProps) => {
     }
 
     setButtonClass(classname);
-    console.log(classname);
-    console.log(available);
-    console.log(book.records);
   }, [available, user?.type, book.records]);
 
   return (

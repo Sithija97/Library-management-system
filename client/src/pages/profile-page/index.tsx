@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { UserRoles, UserTypes } from "../../enums";
 import { fetchUser } from "../../store/slices/auth.slice";
 import { ROOT } from "../../router";
-import { UpdateUserForm } from "../../features/profile";
+import { ProfileLoanHistory, UpdateUserForm } from "../../features/profile";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();
@@ -40,7 +40,9 @@ export const ProfilePage = () => {
           <div className="profile-page-left-column">
             <UpdateUserForm />
           </div>
-          <div className="profile-page-right-column"></div>
+          <div className="profile-page-right-column">
+            {profileUser && <ProfileLoanHistory />}
+          </div>
         </div>
       </div>
     </div>

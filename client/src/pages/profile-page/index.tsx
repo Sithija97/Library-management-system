@@ -41,7 +41,9 @@ export const ProfilePage = () => {
             <UpdateUserForm />
           </div>
           <div className="profile-page-right-column">
-            {profileUser && <ProfileLoanHistory />}
+            {profileUser && profileUser.type === UserRoles.PATRON && (
+              <ProfileLoanHistory />
+            )}
           </div>
         </div>
       </div>

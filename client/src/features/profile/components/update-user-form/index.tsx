@@ -7,7 +7,7 @@ import {
   resetUser,
   updateUser,
 } from "../../../../store/slices/auth.slice";
-import { UserTypes } from "../../../../enums";
+import { UserRoles, UserTypes } from "../../../../enums";
 import { ROOT } from "../../../../router";
 import "./index.css";
 
@@ -17,7 +17,13 @@ export const UpdateUserForm = () => {
   const userState = useAppSelector((state: RootState) => state.authentication);
 
   const [displayUpdate, setDisplayUpdate] = useState<boolean>(false);
-  const [user, setUser] = useState<User | undefined>(userState.profileUser);
+  const [user, setUser] = useState<User>({
+    _id: "",
+    type: UserRoles.IDLE,
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
 
   const handleUserDataChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -41,8 +47,9 @@ export const UpdateUserForm = () => {
   };
 
   useEffect(() => {
-    if (!user) setUser(userState.profileUser);
-  }, [user, userState.profileUser]);
+    if (userState.profileUser)
+      setUser(JSON.parse(JSON.stringify(userState.profileUser)));
+  }, [userState.profileUser?._id]);
 
   return (
     <form onSubmit={handleUpdateUser} className="update-user-form">
@@ -104,11 +111,9 @@ export const UpdateUserForm = () => {
           Update Profile
         </button>
       )}
-      {/* {userState.loggedInUser?._id === userState.profileUser?._id && ( */}
       <button className="profile-button" type="button" onClick={handleLogOut}>
         Logout from Account
       </button>
-      {/* )} */}
     </form>
   );
 };

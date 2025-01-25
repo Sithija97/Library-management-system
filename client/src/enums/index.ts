@@ -6,6 +6,7 @@ export enum LoadingStates {
 }
 
 export enum UserRoles {
+  IDLE = "IDLE",
   ADMIN = "ADMIN",
   EMPLOYEE = "EMPLOYEE",
   PATRON = "PATRON",

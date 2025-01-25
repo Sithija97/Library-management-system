@@ -15,3 +15,8 @@ export enum UserTypes {
   LOGGED_IN_USER = "loggedInUser",
   PROFILE_USER = "profileUser",
 }
+
+export enum LoanTypes {
+  AVAILABLE = "AVAILABLE",
+  LOANED = "LOANED",
+}

@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../../../../store";
 import { User } from "../../../../models/user";
 import { useNavigate } from "react-router-dom";
-import { resetUser, updateUser } from "../../../../store/slices/auth.slice";
+import {
+  resetAuthState,
+  resetUser,
+  updateUser,
+} from "../../../../store/slices/auth.slice";
 import { UserTypes } from "../../../../enums";
 import { ROOT } from "../../../../router";
 import "./index.css";
@@ -32,6 +36,7 @@ export const UpdateUserForm = () => {
     localStorage.removeItem("userId");
     dispatch(resetUser(UserTypes.LOGGED_IN_USER));
     dispatch(resetUser(UserTypes.PROFILE_USER));
+    dispatch(resetAuthState());
     navigate(ROOT);
   };
 
@@ -99,11 +104,11 @@ export const UpdateUserForm = () => {
           Update Profile
         </button>
       )}
-      {userState.loggedInUser?._id === userState.profileUser?._id && (
-        <button className="profile-button" type="button" onClick={handleLogOut}>
-          Logout from Account
-        </button>
-      )}
+      {/* {userState.loggedInUser?._id === userState.profileUser?._id && ( */}
+      <button className="profile-button" type="button" onClick={handleLogOut}>
+        Logout from Account
+      </button>
+      {/* )} */}
     </form>
   );
 };

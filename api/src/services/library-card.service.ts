@@ -27,7 +27,7 @@ export async function findLibraryCard(
       "user"
     );
     if (!card) {
-      throw new CustomError("Book does not exist", 404);
+      throw new CustomError("Library card does not exist", 404);
     }
     return card;
   } catch (error) {

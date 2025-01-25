@@ -121,6 +121,9 @@ export const AuthenticationSlice = createSlice({
     resetRegisterSuccess(state) {
       state.registerUserSuccess = false;
     },
+    resetAuthState(state) {
+      Object.assign(state, initialState);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -201,6 +204,7 @@ export const AuthenticationSlice = createSlice({
   },
 });
 
-export const { resetUser, resetRegisterSuccess } = AuthenticationSlice.actions;
+export const { resetUser, resetAuthState, resetRegisterSuccess } =
+  AuthenticationSlice.actions;
 
 export default AuthenticationSlice.reducer;

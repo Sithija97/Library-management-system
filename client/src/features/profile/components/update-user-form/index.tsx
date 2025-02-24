@@ -7,7 +7,7 @@ import {
   resetUser,
   updateUser,
 } from "../../../../store/slices/auth.slice";
-import { UserRoles, UserTypes } from "../../../../enums";
+import { UserTypes } from "../../../../enums";
 import { ROOT } from "../../../../router";
 import "./index.css";
 
@@ -17,13 +17,7 @@ export const UpdateUserForm = () => {
   const userState = useAppSelector((state: RootState) => state.authentication);
 
   const [displayUpdate, setDisplayUpdate] = useState<boolean>(false);
-  const [user, setUser] = useState<User>({
-    _id: "",
-    type: UserRoles.IDLE,
-    firstName: "",
-    lastName: "",
-    email: "",
-  });
+  const [user, setUser] = useState<User | undefined>();
 
   const handleUserDataChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -111,9 +105,11 @@ export const UpdateUserForm = () => {
           Update Profile
         </button>
       )}
+      {/* {userState.loggedInUser?._id === userState.profileUser?._id && ( */}
       <button className="profile-button" type="button" onClick={handleLogOut}>
         Logout from Account
       </button>
+      {/* )} */}
     </form>
   );
 };
